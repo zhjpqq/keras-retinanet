@@ -205,6 +205,7 @@ def retinanet_bbox(inputs, num_classes, nms=True, name='retinanet-bbox', *args, 
     anchors        = model.outputs[0]
     regression     = model.outputs[1]
     classification = model.outputs[2]
+    # pyramid        = model.outputs[3:]
 
     # apply predicted regression to anchors
     boxes      = layers.RegressBoxes(name='boxes')([anchors, regression])
