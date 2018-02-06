@@ -97,16 +97,16 @@ def resnet152_retinanet(num_classes, inputs=None, weights='imagenet', skip_misma
     return resnet_retinanet(num_classes=num_classes, backbone=152, inputs=inputs, weights=weights, skip_mismatch=skip_mismatch, **kwargs)
 
 
-def ResNet50RetinaNet(inputs, num_classes, skip_mismatch=True, **kwargs):
+def ResNet50RetinaNet(inputs, num_classes, skip_mismatch=True, *args, **kwargs):
     warnings.warn("ResNet50RetinaNet is replaced by resnet50_retinanet and will be removed in a future release.")
     return resnet50_retinanet(num_classes, inputs, *args, skip_mismatch=skip_mismatch, **kwargs)
 
 
-def ResNet101RetinaNet(inputs, num_classes, skip_mismatch=True, **kwargs):
+def ResNet101RetinaNet(inputs, num_classes, skip_mismatch=True, *args, **kwargs):
     warnings.warn("ResNet101RetinaNet is replaced by resnet101_retinanet and will be removed in a future release.")
     return resnet101_retinanet(num_classes, inputs, *args, skip_mismatch=skip_mismatch, **kwargs)
 
 
-def ResNet152RetinaNet(inputs, num_classes, skip_mismatch=True, **kwargs):
+def ResNet152RetinaNet(inputs, num_classes, skip_mismatch=True, *args, **kwargs):
     warnings.warn("ResNet152RetinaNet is replaced by resnet152_retinanet and will be removed in a future release.")
     return resnet152_retinanet(num_classes, inputs, *args, skip_mismatch=skip_mismatch, **kwargs)
