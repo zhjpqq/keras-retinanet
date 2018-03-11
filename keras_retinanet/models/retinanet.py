@@ -67,6 +67,7 @@ def default_classification_model(
     )(outputs)
 
     # reshape output and apply sigmoid
+    # todo ? 100 × 7×7 ×（num_classes * num_anchors）：100× 7*7*num_anchors ×num_classes?
     outputs = keras.layers.Reshape((-1, num_classes), name='pyramid_classification_reshape')(outputs)
     outputs = keras.layers.Activation('sigmoid', name='pyramid_classification_sigmoid')(outputs)
 
@@ -94,7 +95,7 @@ def default_regression_model(num_anchors, pyramid_feature_size=256, regression_f
             name='pyramid_regression_{}'.format(i),
             **options
         )(outputs)
-
+    # todo ？？使用卷积直接预测box ？？reshape调整结果
     outputs = keras.layers.Conv2D(num_anchors * 4, name='pyramid_regression', **options)(outputs)
     outputs = keras.layers.Reshape((-1, 4), name='pyramid_regression_reshape')(outputs)
 
@@ -205,15 +206,15 @@ def retinanet_bbox(inputs, num_classes, nms=True, name='retinanet-bbox', *args, 
     anchors        = model.outputs[0]
     regression     = model.outputs[1]
     classification = model.outputs[2]
-    # pyramid        = model.outputs[3:]
 
     # apply predicted regression to anchors
     boxes      = layers.RegressBoxes(name='boxes')([anchors, regression])
-    detections = keras.layers.Concatenate(axis=2)([boxes, classification] + model.outputs[3:])
+    detections = keras.layers.Concatenate(axis=2)([boxes,] + model.outputs[3:])
 
     # additionally apply non maximum suppression
     if nms:
         detections = layers.NonMaximumSuppression(name='nms')([boxes, classification, detections])
 
     # construct the model
+    # outputs：regression，class，detections，
     return keras.models.Model(inputs=inputs, outputs=model.outputs[1:] + [detections], name=name)

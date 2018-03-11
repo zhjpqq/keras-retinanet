@@ -232,7 +232,10 @@ def main(args=None):
 
     # create the model
     print('Creating model, this may take a second...')
-    model, training_model, prediction_model = create_models(num_classes=train_generator.num_classes(), weights=args.weights, multi_gpu=args.multi_gpu)
+    model, training_model, prediction_model = create_models(
+                                    num_classes=train_generator.num_classes(),
+                                    weights=args.weights,
+                                    multi_gpu=args.multi_gpu)
 
     # print model summary
     print('model信息汇总：', model.summary())
